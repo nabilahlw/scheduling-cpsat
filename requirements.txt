@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+ortools
+pydantic
+sqlalchemy
+pymysql
+pyjwt
+python-dotenv
+pytest
+httpx
