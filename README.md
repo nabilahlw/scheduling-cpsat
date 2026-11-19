@@ -53,7 +53,7 @@ scheduling-cpsat/
 
 ---
 
-## 2. Setup (sekali saja)
+## 2. Setup
 
 1. Nyalakan MySQL di XAMPP (Apache tidak wajib).
 2. Virtual environment dan library** (dari folder proyek):
