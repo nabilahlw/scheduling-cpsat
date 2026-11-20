@@ -1,0 +1,1929 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "School Scheduling API with CP-SAT",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Get /",
+                "operationId": "GET____get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/change-password": {
+            "post": {
+                "summary": "Post /Api/Auth/Change-Password",
+                "operationId": "POST__api_auth_change_password_api_auth_change_password_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordChange"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "summary": "Post /Api/Auth/Login",
+                "operationId": "POST__api_auth_login_api_auth_login_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/me": {
+            "get": {
+                "summary": "Get /Api/Auth/Me",
+                "operationId": "GET__api_auth_me_api_auth_me_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/db-test": {
+            "get": {
+                "summary": "Get /Api/Db-Test",
+                "operationId": "GET__api_db_test_api_db_test_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/schedule/generate": {
+            "post": {
+                "summary": "Post /Api/Schedule/Generate",
+                "description": "Generate satu hari. Penugasan yang sudah tersimpan di hari yang sama ikut diperhitungkan;\nsesi dengan kunci sama (sekolah+kelas+jam) ditimpa. replace_day=true mengosongkan hari itu dulu.",
+                "operationId": "POST__api_schedule_generate_api_schedule_generate_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduleRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/schedule/generate-multi": {
+            "post": {
+                "summary": "Post /Api/Schedule/Generate-Multi",
+                "description": "Generate beberapa hari sekaligus, dengan opsi max_daily_minutes / max_weekly_minutes.",
+                "operationId": "POST__api_schedule_generate_multi_api_schedule_generate_multi_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MultiDayRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/schedule/manual": {
+            "post": {
+                "summary": "Post /Api/Schedule/Manual",
+                "description": "Simpan pilihan admin untuk satu sesi (guru dipilih dari GET /api/teachers/available).",
+                "operationId": "POST__api_schedule_manual_api_schedule_manual_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ManualScheduleRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/schedule/{day}": {
+            "get": {
+                "summary": "Get /Api/Schedule/{Day}",
+                "operationId": "GET__api_schedule__day__api_schedule__day__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "day",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete /Api/Schedule/{Day}",
+                "description": "Hapus seluruh jadwal hari itu (atau hanya satu sekolah bila `school` diisi).",
+                "operationId": "DELETE__api_schedule__day__api_schedule__day__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "day",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Day"
+                        }
+                    },
+                    {
+                        "name": "school",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "School"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/schools": {
+            "get": {
+                "summary": "Get /Api/Schools",
+                "operationId": "GET__api_schools_api_schools_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "include_deleted",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Include Deleted"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Post /Api/Schools",
+                "operationId": "POST__api_schools_api_schools_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NameBody"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/schools/{school_id}": {
+            "get": {
+                "summary": "Get /Api/Schools/{School Id}",
+                "operationId": "GET__api_schools__school_id__api_schools__school_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "school_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "School Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Put /Api/Schools/{School Id}",
+                "operationId": "PUT__api_schools__school_id__api_schools__school_id__put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "school_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "School Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NameBody"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete /Api/Schools/{School Id}",
+                "operationId": "DELETE__api_schools__school_id__api_schools__school_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "school_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "School Id"
+                        }
+                    },
+                    {
+                        "name": "force",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Force"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/sessions/{session_id}": {
+            "get": {
+                "summary": "Get /Api/Sessions/{Session Id}",
+                "operationId": "GET__api_sessions__session_id__api_sessions__session_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "session_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Session Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Patch /Api/Sessions/{Session Id}",
+                "operationId": "PATCH__api_sessions__session_id__api_sessions__session_id__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "session_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Session Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SessionUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete /Api/Sessions/{Session Id}",
+                "operationId": "DELETE__api_sessions__session_id__api_sessions__session_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "session_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Session Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teachers": {
+            "get": {
+                "summary": "Get /Api/Teachers",
+                "operationId": "GET__api_teachers_api_teachers_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "include_deleted",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Include Deleted"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Post /Api/Teachers",
+                "operationId": "POST__api_teachers_api_teachers_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NameBody"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teachers/availability": {
+            "post": {
+                "summary": "Post /Api/Teachers/Availability",
+                "operationId": "POST__api_teachers_availability_api_teachers_availability_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "items": {
+                                    "$ref": "#/components/schemas/AvailabilityItem"
+                                },
+                                "type": "array",
+                                "title": "Items"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/teachers/availability/{day}": {
+            "get": {
+                "summary": "Get /Api/Teachers/Availability/{Day}",
+                "operationId": "GET__api_teachers_availability__day__api_teachers_availability__day__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "day",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teachers/available": {
+            "get": {
+                "summary": "Get /Api/Teachers/Available",
+                "description": "Cari guru yang tersedia di hari + jam tertentu (tidak menyimpan apa pun).",
+                "operationId": "GET__api_teachers_available_api_teachers_available_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "day",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Day"
+                        }
+                    },
+                    {
+                        "name": "start",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Start"
+                        }
+                    },
+                    {
+                        "name": "end",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "End"
+                        }
+                    },
+                    {
+                        "name": "school",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "School"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teachers/remaining/{day}": {
+            "get": {
+                "summary": "Get /Api/Teachers/Remaining/{Day}",
+                "description": "Sisa jam kosong per guru = jam tersedia - jam sudah ditugaskan.\nIsi `school` agar tugas di sekolah lain diperlebar dengan jeda pindah.",
+                "operationId": "GET__api_teachers_remaining__day__api_teachers_remaining__day__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "day",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Day"
+                        }
+                    },
+                    {
+                        "name": "school",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "School"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teachers/{teacher_id}": {
+            "get": {
+                "summary": "Get /Api/Teachers/{Teacher Id}",
+                "operationId": "GET__api_teachers__teacher_id__api_teachers__teacher_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "teacher_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Teacher Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Put /Api/Teachers/{Teacher Id}",
+                "operationId": "PUT__api_teachers__teacher_id__api_teachers__teacher_id__put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "teacher_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Teacher Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NameBody"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete /Api/Teachers/{Teacher Id}",
+                "description": "Soft delete. Jika guru punya penugasan: 409, kecuali ?force=true.",
+                "operationId": "DELETE__api_teachers__teacher_id__api_teachers__teacher_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "teacher_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Teacher Id"
+                        }
+                    },
+                    {
+                        "name": "force",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Force"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teachers/{teacher_id}/availability": {
+            "delete": {
+                "summary": "Delete /Api/Teachers/{Teacher Id}/Availability",
+                "description": "Hapus ketersediaan satu guru (satu hari, atau semua hari bila `day` kosong).\nPERHATIAN: guru tanpa data ketersediaan dianggap bisa kapan saja.",
+                "operationId": "DELETE__api_teachers__teacher_id__availability_api_teachers__teacher_id__availability_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "teacher_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Teacher Id"
+                        }
+                    },
+                    {
+                        "name": "day",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "summary": "Get /Api/Users",
+                "operationId": "GET__api_users_api_users_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Post /Api/Users",
+                "operationId": "POST__api_users_api_users_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/users/{user_id}": {
+            "patch": {
+                "summary": "Patch /Api/Users/{User Id}",
+                "operationId": "PATCH__api_users__user_id__api_users__user_id__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "User Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/workload/{day}": {
+            "get": {
+                "summary": "Get /Api/Workload/{Day}",
+                "operationId": "GET__api_workload__day__api_workload__day__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "day",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AvailabilityItem": {
+                "properties": {
+                    "teacher_name": {
+                        "type": "string",
+                        "title": "Teacher Name"
+                    },
+                    "day": {
+                        "type": "string",
+                        "title": "Day"
+                    },
+                    "ranges": {
+                        "items": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "type": "array",
+                        "title": "Ranges"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "teacher_name",
+                    "day",
+                    "ranges"
+                ],
+                "title": "AvailabilityItem"
+            },
+            "DaySchedule": {
+                "properties": {
+                    "day": {
+                        "type": "string",
+                        "title": "Day"
+                    },
+                    "schools": {
+                        "items": {
+                            "$ref": "#/components/schemas/SchoolItem"
+                        },
+                        "type": "array",
+                        "title": "Schools"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "day",
+                    "schools"
+                ],
+                "title": "DaySchedule"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "LoginRequest": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "title": "LoginRequest"
+            },
+            "ManualScheduleRequest": {
+                "properties": {
+                    "day": {
+                        "type": "string",
+                        "title": "Day"
+                    },
+                    "school_name": {
+                        "type": "string",
+                        "title": "School Name"
+                    },
+                    "class_name": {
+                        "type": "string",
+                        "title": "Class Name"
+                    },
+                    "time_slot": {
+                        "type": "string",
+                        "title": "Time Slot"
+                    },
+                    "teachers": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Teachers"
+                    },
+                    "required_teachers_count": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Required Teachers Count"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "day",
+                    "school_name",
+                    "class_name",
+                    "time_slot",
+                    "teachers"
+                ],
+                "title": "ManualScheduleRequest"
+            },
+            "MultiDayRequest": {
+                "properties": {
+                    "available_teachers": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Available Teachers"
+                    },
+                    "replace_day": {
+                        "type": "boolean",
+                        "title": "Replace Day",
+                        "default": false
+                    },
+                    "continuity": {
+                        "type": "boolean",
+                        "title": "Continuity",
+                        "default": true
+                    },
+                    "teacher_priority": {
+                        "additionalProperties": {
+                            "type": "integer"
+                        },
+                        "type": "object",
+                        "title": "Teacher Priority",
+                        "default": {}
+                    },
+                    "max_daily_minutes": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "exclusiveMinimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Daily Minutes"
+                    },
+                    "max_weekly_minutes": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "exclusiveMinimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Weekly Minutes"
+                    },
+                    "days": {
+                        "items": {
+                            "$ref": "#/components/schemas/DaySchedule"
+                        },
+                        "type": "array",
+                        "title": "Days"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "available_teachers",
+                    "days"
+                ],
+                "title": "MultiDayRequest"
+            },
+            "NameBody": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "confirm_new": {
+                        "type": "boolean",
+                        "title": "Confirm New",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "NameBody"
+            },
+            "PasswordChange": {
+                "properties": {
+                    "old_password": {
+                        "type": "string",
+                        "title": "Old Password"
+                    },
+                    "new_password": {
+                        "type": "string",
+                        "title": "New Password"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "old_password",
+                    "new_password"
+                ],
+                "title": "PasswordChange"
+            },
+            "ScheduleRequest": {
+                "properties": {
+                    "available_teachers": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Available Teachers"
+                    },
+                    "replace_day": {
+                        "type": "boolean",
+                        "title": "Replace Day",
+                        "default": false
+                    },
+                    "continuity": {
+                        "type": "boolean",
+                        "title": "Continuity",
+                        "default": true
+                    },
+                    "teacher_priority": {
+                        "additionalProperties": {
+                            "type": "integer"
+                        },
+                        "type": "object",
+                        "title": "Teacher Priority",
+                        "default": {}
+                    },
+                    "max_daily_minutes": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "exclusiveMinimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Daily Minutes"
+                    },
+                    "max_weekly_minutes": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "exclusiveMinimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Weekly Minutes"
+                    },
+                    "day": {
+                        "type": "string",
+                        "title": "Day"
+                    },
+                    "schools": {
+                        "items": {
+                            "$ref": "#/components/schemas/SchoolItem"
+                        },
+                        "type": "array",
+                        "title": "Schools"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "available_teachers",
+                    "day",
+                    "schools"
+                ],
+                "title": "ScheduleRequest"
+            },
+            "SchoolItem": {
+                "properties": {
+                    "school_name": {
+                        "type": "string",
+                        "maxLength": 150,
+                        "minLength": 1,
+                        "title": "School Name"
+                    },
+                    "sessions": {
+                        "items": {
+                            "$ref": "#/components/schemas/SessionItem"
+                        },
+                        "type": "array",
+                        "title": "Sessions"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "school_name",
+                    "sessions"
+                ],
+                "title": "SchoolItem"
+            },
+            "SessionItem": {
+                "properties": {
+                    "time_slot": {
+                        "type": "string",
+                        "title": "Time Slot"
+                    },
+                    "duration_minutes": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0.0,
+                        "title": "Duration Minutes"
+                    },
+                    "class_name": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "minLength": 1,
+                        "title": "Class Name"
+                    },
+                    "required_teachers_count": {
+                        "type": "integer",
+                        "minimum": 1.0,
+                        "title": "Required Teachers Count"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "time_slot",
+                    "duration_minutes",
+                    "class_name",
+                    "required_teachers_count"
+                ],
+                "title": "SessionItem"
+            },
+            "SessionUpdate": {
+                "properties": {
+                    "day": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Day"
+                    },
+                    "school_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "School Name"
+                    },
+                    "class_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Class Name"
+                    },
+                    "time_slot": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Time Slot"
+                    },
+                    "teachers": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Teachers"
+                    },
+                    "required_teachers_count": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Required Teachers Count"
+                    }
+                },
+                "type": "object",
+                "title": "SessionUpdate"
+            },
+            "UserCreate": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
+                    },
+                    "role": {
+                        "type": "string",
+                        "title": "Role",
+                        "default": "admin"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "title": "UserCreate"
+            },
+            "UserUpdate": {
+                "properties": {
+                    "role": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Role"
+                    },
+                    "is_active": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Is Active"
+                    },
+                    "password": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Password"
+                    }
+                },
+                "type": "object",
+                "title": "UserUpdate"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    },
+                    "input": {
+                        "title": "Input"
+                    },
+                    "ctx": {
+                        "type": "object",
+                        "title": "Context"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        },
+        "securitySchemes": {
+            "HTTPBearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

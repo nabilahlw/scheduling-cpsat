@@ -26,6 +26,10 @@ scheduling-cpsat/
 │   │   ├── invoices/      daftar/buat invoice · [invoice_id] · [invoice_id]/status
 │   │   └── db-test/       cek koneksi database
 │   │
+│   ├── docs/              dokumentasi API
+│   │   ├── openapi.json/         daftar endpoint, method, auth, parameter, body, dan respons.
+│   │   ├── openapi.yaml/         isi yang sama tp dlm format yaml
+│   │
 │   ├── core/              INFRASTRUKTUR
 │   │   ├── config.py          Settings, membaca .env
 │   │   ├── database.py        Database (engine + transaksi)
@@ -39,21 +43,20 @@ scheduling-cpsat/
 │   ├── schemas/           model request (Pydantic): auth, people, schedule
 │   ├── models/            entities.py → User, Teacher, School
 │   ├── repositories/      SEMUA SQL, satu class per tabel/agregat
-│   ├── services/          ATURAN BISNIS, satu class per fitur
+│   ├── services/          satu class per fitur
 │   ├── solver/            CP-SAT: context · model_builder · diagnostics · scheduler
 │   └── lib/               timeutil.py (jam/hari), names.py (nama)
 │
-├── scripts/create_admin.py    buat admin pertama
+├── scripts/create_admin.py    buat admin 
 ├── sql/schema.sql             struktur tabel (instalasi baru)
-├── sql/migration.sql          perubahan untuk database lama
 ├── tests/                     test_routes · test_solver · test_timeutil
-├── .env.example               contoh pengaturan
+├── .env.example               
 └── requirements.txt
 ```
 
 ---
 
-## 2. Setup
+## 2. Setup 
 
 1. Nyalakan MySQL di XAMPP (Apache tidak wajib).
 2. Virtual environment dan library** (dari folder proyek):
@@ -72,13 +75,26 @@ scheduling-cpsat/
    ```bash
    python3 -m uvicorn app.main:app --reload --port 8000
    ```
-7. Buka http://127.0.0.1:8000/docs → `POST /api/auth/login` → salin `access_token` → klik Authorize → tempel token.
-8. Test dgn Postman: `POST /api/auth/login` (Auth: No Auth, Body: raw JSON `{"username":"admin","password":"..."}`) → salin `access_token` → di request lain pilih Authorization → Bearer Token → tempel token.
-9. Tes otomatis: `python3 -m pytest tests -q` (tes waktu, solver, dan daftar rute tidak butuh database).
 
 ---
 
-## 3. Database
+## 3. Testing
+
+1. Tes manual lewat Swagger
+Buka http://127.0.0.1:8000/docs → `POST /api/auth/login` → salin `access_token` → klik Authorize → tempel token → coba endpoint lain.
+
+2. Tes manual lewat Postman
+`POST /api/auth/login` (Body: raw JSON `{"username":"..","password":".."}`) → salin `access_token` → di request lain pilih Authorization → Bearer Token → tempel token.
+
+3. Tes otomatis (server tidak perlu menyala)
+```bash
+python3 -m pytest tests -q
+```
+Tes waktu, solver, dan daftar rute tidak butuh database. Hasil yang diharapkan: semua tes `passed`, tanpa `failed`.
+
+---
+
+## 4. Database
 
 | Tabel | Isi | Catatan |
 |---|---|---|
@@ -90,11 +106,10 @@ scheduling-cpsat/
 | `teacher_schedules` | ATURAN: jam guru bisa mengajar per hari (JSON rentang jam, jumlah rentang, total jam) | tidak berubah saat guru ditugaskan |
 | `teacher_workload` | HASIL: jam guru yang sudah ditugaskan per hari | dibangun ulang otomatis dari `assignments` |
 | `users` | akun login | password disimpan sebagai hash |
-| `invoices`, `invoice_items` | invoice dan item-itemnya | soft delete (`deleted_at`) |
 
 ---
 
-## 4. Daftar Endpoint
+## 5. Daftar Endpoint
 
 | Kelompok | Endpoint |
 |---|---|
@@ -105,5 +120,4 @@ scheduling-cpsat/
 | **Sekolah** | `GET, POST /api/schools` · `GET, PUT, DELETE /api/schools/{id}` |
 | **Jadwal** | `POST /api/schedule/generate` · `POST /api/schedule/generate-multi` · `POST /api/schedule/manual` · `GET, DELETE /api/schedule/{hari}` |
 | **Sesi & beban** | `GET, PATCH, DELETE /api/sessions/{id}` · `GET /api/workload/{hari}` |
-| **Invoice** | `GET, POST /api/invoices` · `GET, PATCH, DELETE /api/invoices/{id}` · `POST /api/invoices/{id}/status` |
 | **Lainnya** | `GET /` · `GET /api/db-test` |
